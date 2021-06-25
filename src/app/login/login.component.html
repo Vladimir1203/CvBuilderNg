@@ -1,13 +1,13 @@
 <div fxLayoutAlign="center center" fxFlexFill class ="main-div">
   <mat-card fxFlex="80">
     <mat-toolbar color ="primary">Login Page</mat-toolbar>
-    <form fxLayoutAlign="stretch" fxLayout="column" class = "login-form">
+    <form [formGroup]="loginForm" fxLayoutAlign="stretch" fxLayout="column" class = "login-form">
       <mat-form-field>
-        <input matInput placeholder="Username:">
+        <input matInput placeholder="Username:" [formControlName]="'username'">
       </mat-form-field>
       <br><br>
       <mat-form-field>
-        <input matInput type = 'password' placeholder="Password:">
+        <input matInput type = 'password' placeholder="Password:"[formControlName]="'password'">
       </mat-form-field>
       <br><br>
       <div>
