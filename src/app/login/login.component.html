@@ -1,0 +1,20 @@
+<div fxLayoutAlign="center center" fxFlexFill class ="main-div">
+  <mat-card fxFlex="80">
+    <mat-toolbar color ="primary">Login Page</mat-toolbar>
+    <form fxLayoutAlign="stretch" fxLayout="column" class = "login-form">
+      <mat-form-field>
+        <input matInput placeholder="Username:">
+      </mat-form-field>
+      <br><br>
+      <mat-form-field>
+        <input matInput type = 'password' placeholder="Password:">
+      </mat-form-field>
+      <br><br>
+      <div>
+        <button  class="btn btn-primary" (click)="onClickingLogin()">Login</button>
+        <button  class="btn btn-link" (click) = "onClickingRegister()">Register</button>
+      </div>
+    </form>
+  </mat-card>
+  <!--  <div>{{loginMessage}}</div>-->
+</div>
