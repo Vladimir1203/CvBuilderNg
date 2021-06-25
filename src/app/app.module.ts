@@ -6,12 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { FooterComponent } from './footer/footer.component';
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from "./app.routing.module";
 import { LogoutComponent } from './logout/logout.component';
 import {AlertModule} from "ngx-bootstrap/alert";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {NgxWebstorageModule} from 'ngx-webstorage';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -33,20 +33,23 @@ import { HttpClientModule } from "@angular/common/http";
     HomeComponent,
     TemplateComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    AlertModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    MatToolbarModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        AlertModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        MatToolbarModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+      NgxWebstorageModule.forRoot(),
+
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
