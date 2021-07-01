@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from "../service/authentication.service";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  message : string;
+
+  constructor(private authService : AuthenticationService) { }
 
   ngOnInit(): void {
+    this.message = this.authService.token;
   }
+
+
 
 }

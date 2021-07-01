@@ -13,6 +13,8 @@ import {map} from "rxjs/operators";
 })
 export class AuthenticationService {
 
+  token : string;
+
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
 
@@ -29,11 +31,29 @@ export class AuthenticationService {
 
       this.loggedIn.emit(true);
       this.username.emit(data.username);
+
+      this.token = this.localStorage.retrieve('authenticationToken');
       return true;
     }));
   }
 
   register(registerRequestPayload : RegisterRequestPayload): Observable<any> {
     return this.client.post('http://localhost:8080/auth/signup', registerRequestPayload, { responseType: 'text' });
+  }
+
+  isUserLoggedIn(){
+    if(this.token !=null)
+      return true;
+    return false;
+  }
+
+  logout() {
+    this.token = null;
+    this.localStorage.clear('authenticationToken');
+    console.log("and this is your token now" + this.token);
+  }
+
+  isAuthenticated() {
+    return this.token != null;
   }
 }

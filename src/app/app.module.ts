@@ -21,6 +21,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { HomeComponent } from './home/home.component';
 import { TemplateComponent } from './templates/template/template.component';
 import { HttpClientModule } from "@angular/common/http";
+import {AuthGuard} from "./service/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { HttpClientModule } from "@angular/common/http";
       NgxWebstorageModule.forRoot(),
 
     ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
