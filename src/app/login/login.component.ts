@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../service/authentication.service";
+import {AuthenticationService} from "../auth/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginRequestPayload} from "../shared/dto/login-request.payload";
 import {throwError} from "rxjs";

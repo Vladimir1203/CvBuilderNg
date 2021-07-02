@@ -5,7 +5,7 @@ import {LogoutComponent} from "./logout/logout.component";
 import {HomeComponent} from "./home/home.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {TemplateComponent} from "./templates/template/template.component";
-import { AuthGuard } from './service/auth-guard.service';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const routes : Routes = [
   { path:'', component:LoginComponent },

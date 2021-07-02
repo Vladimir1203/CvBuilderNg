@@ -20,8 +20,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { HomeComponent } from './home/home.component';
 import { TemplateComponent } from './templates/template/template.component';
-import { HttpClientModule } from "@angular/common/http";
-import {AuthGuard} from "./service/auth-guard.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthGuard} from "./auth/auth-guard.service";
+import {AuthInterceptor} from "./shared/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,9 @@ import {AuthGuard} from "./service/auth-guard.service";
       NgxWebstorageModule.forRoot(),
 
     ],
-  providers: [AuthGuard],
+  providers: [AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
