@@ -18,14 +18,14 @@ export class TemplateService {
   }
 
   public addTemplate(template: Template): Observable<Template> {
-    return this.http.post<Template>(`${this.apiServerUrl}/template/add`, template);
+    return this.http.post<Template>(`${this.apiServerUrl}/templates/add`, template);
   }
 
   public updateTemplate(template: Template): Observable<Template> {
-    return this.http.put<Template>(`${this.apiServerUrl}/template/update`, template);
+    return this.http.put<Template>(`${this.apiServerUrl}/templates/update`, template);
   }
 
   public deleteTemplate(templateId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/template/delete/${templateId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/templates/delete/${templateId}`);
   }
 }
