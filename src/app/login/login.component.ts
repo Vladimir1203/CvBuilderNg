@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../auth/authentication.service";
+import {AuthenticationService} from "../service/auth/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginRequestPayload} from "../shared/dto/login-request.payload";
 import {throwError} from "rxjs";
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       this.isError = false;
       this.router.navigateByUrl('home');
     }, error => {
+      console.log("vracen odgovor sa back-a, postoji greska")
       this.isError = true;
       throwError(error);
     });

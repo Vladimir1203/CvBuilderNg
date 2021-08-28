@@ -1,11 +1,12 @@
 <header>
   <nav class = "navbar navbar-expand-md navbar-dark bg-dark">
-    <div><a href = "https://www.github.com/Vladimir1203" class = "navbar-brand">CVBuilder</a></div>
+    <div><a href = "localhost:4200" class = "navbar-brand">CVBuilder</a></div>
 
     <ul class = "navbar-nav">
       <ng-template [ngIf]="authService.isAuthenticated()">
         <li routerLinkActive="active"><a routerLink = "/home" class = "nav-link">Home</a></li>
         <li routerLinkActive="active"><a routerLink = "/templates" class = "nav-link">Templates</a></li>
+        <li routerLinkActive="active"><a routerLink = "/newCV" class = "nav-link">Create new CV</a></li>
       </ng-template>
     </ul>
 

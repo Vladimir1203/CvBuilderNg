@@ -3,9 +3,9 @@ import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {LocalStorageService} from "ngx-webstorage";
 import {Observable} from "rxjs";
-import {RegisterRequestPayload} from "../shared/dto/register-request.payload";
-import {LoginRequestPayload} from "../shared/dto/login-request.payload";
-import {LoginResponse} from "../shared/dto/login-response.payload";
+import {RegisterRequestPayload} from "../../shared/dto/register-request.payload";
+import {LoginRequestPayload} from "../../shared/dto/login-request.payload";
+import {LoginResponse} from "../../shared/dto/login-response.payload";
 import {map} from "rxjs/operators";
 
 @Injectable({

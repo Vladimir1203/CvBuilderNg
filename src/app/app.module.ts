@@ -21,8 +21,10 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { HomeComponent } from './home/home.component';
 import { TemplateComponent } from './templates/template/template.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthGuard} from "./auth/auth-guard.service";
+import {AuthGuard} from "./service/auth/auth-guard.service";
 import {AuthInterceptor} from "./shared/auth.interceptor";
+import { NewCVComponent } from './new-cv/new-cv.component';
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -33,25 +35,27 @@ import {AuthInterceptor} from "./shared/auth.interceptor";
     FooterComponent,
     LogoutComponent,
     HomeComponent,
-    TemplateComponent
+    TemplateComponent,
+    NewCVComponent
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        AlertModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule,
-        MatToolbarModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-      NgxWebstorageModule.forRoot(),
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    AlertModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatToolbarModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgxWebstorageModule.forRoot(),
+    MatStepperModule,
 
-    ],
+  ],
   providers: [AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     ],
