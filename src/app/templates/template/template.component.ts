@@ -3,6 +3,9 @@ import {Template} from "./template";
 import {TemplateService} from "../../service/template.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+import {Router} from "@angular/router";
+import { FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-template',
@@ -11,9 +14,11 @@ import {NgForm} from "@angular/forms";
 })
 export class TemplateComponent implements OnInit {
 
+  checkoutForm = this.formBuilder.group({
+  });
   templates : Template[];
 
-  constructor(private templateService : TemplateService) { }
+  constructor(private formBuilder: FormBuilder, private templateService : TemplateService, private router : Router) { }
 
   ngOnInit(): void {
     this.getTemplates();
@@ -62,5 +67,13 @@ export class TemplateComponent implements OnInit {
         alert(error.message)
       }
     )
+  }
+
+  createBasicCV() {
+    this.router.navigate(['/newCV'])
+  }
+
+  createCustomCV() {
+    this.router.navigate(['/customSections'])
   }
 }

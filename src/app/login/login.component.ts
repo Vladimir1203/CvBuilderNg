@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
       this.isError = false;
       this.router.navigateByUrl('home');
     }, error => {
-      console.log("vracen odgovor sa back-a, postoji greska")
       this.isError = true;
       throwError(error);
     });

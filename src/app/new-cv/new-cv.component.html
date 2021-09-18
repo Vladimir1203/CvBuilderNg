@@ -1,0 +1,226 @@
+<ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'">Make your screen smaller to see a vertical stepper</div>
+  <div *ngSwitchCase="'vertical'">Make your screen larger to see a horizontal stepper</div>
+</ng-container>
+
+
+<mat-stepper id="content"
+  class="example-stepper"
+  [orientation]="(stepperOrientation | async)!">
+  <mat-step [stepControl]="firstFormGroup" label="Basic information">
+    <form [formGroup]="firstFormGroup">
+      <h3>Fill the form with your basic information.</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Ex. John" formControlName="name" required>
+      </mat-form-field>
+      <div></div>
+      <mat-form-field appearance="fill">
+        <mat-label>Surname</mat-label>
+        <input matInput placeholder="Ex. Lesar" formControlName="surname" required>
+      </mat-form-field>
+      <div></div>
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail address</mat-label>
+        <input matInput placeholder="Ex. user@gmail.com" formControlName="email" required>
+      </mat-form-field>
+      <div></div>
+      <mat-form-field appearance="fill">
+        <mat-label>Contact number</mat-label>
+        <input matInput placeholder="Ex. +381 60 6265 392" formControlName="phoneNumber" required>
+      </mat-form-field>
+      <div></div>
+      <mat-form-field appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Ex. Sv. Save 76" formControlName="address" required>
+      </mat-form-field>
+      <div></div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step *ngIf = "containsWorkEx()" [stepControl]="secondFormGroup" label="Work experience">
+    <form [formGroup]="secondFormGroup">
+      <h3>Fill the form with your work experience. Note: This section is repeatable (you can add multiple experiences)</h3>
+      <div class = "row">
+        <div class="col-md-4" *ngFor="let ex of workExperienceSections; let i=index">
+          <div class="form-group">
+            <mat-form-field appearance="fill">
+              <mat-label>Job title</mat-label>
+              <input matInput [(ngModel)]="ex.jobTitle" [ngModelOptions]="{standalone: true}" placeholder="Ex. Junior Java developer" required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>Company name</mat-label>
+              <input matInput [(ngModel)]="ex.companyName" [ngModelOptions]="{standalone: true}" placeholder="Ex. SAP" required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>Start date</mat-label>
+              <input matInput [(ngModel)]="ex.startDate" [ngModelOptions]="{standalone: true}" placeholder="Ex. 01.01.2021." required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>End date</mat-label>
+              <input matInput [(ngModel)]="ex.endDate" [ngModelOptions]="{standalone: true}" placeholder="Ex. 01.10.2021." required>
+            </mat-form-field>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" (click)="addExperience()">+</button>
+      <div></div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step *ngIf = "containsEducation()" [stepControl]="thirdFormGroup" label="Education">
+    <form [formGroup]="thirdFormGroup">
+      <h3>Fill the form with your education. Note: This section is repeatable (you can add multiple educations)</h3>
+      <div class = "row">
+        <div class="col-md-4" *ngFor="let ed of educationSections; let i=index">
+          <div class="form-group">
+            <mat-form-field appearance="fill">
+              <mat-label>School name</mat-label>
+              <input matInput [(ngModel)]="ed.schoolName" [ngModelOptions]="{standalone: true}" placeholder="Ex. FON" required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>Start date</mat-label>
+              <input matInput [(ngModel)]="ed.startDate" [ngModelOptions]="{standalone: true}" placeholder="Ex. 01.10.2016." required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>End date</mat-label>
+              <input matInput [(ngModel)]="ed.endDate" [ngModelOptions]="{standalone: true}" placeholder="Ex. 01.10.2021." required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>Title</mat-label>
+              <input matInput [(ngModel)]="ed.title" [ngModelOptions]="{standalone: true}" placeholder="Ex. Graduated Engineer" required>
+            </mat-form-field>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" (click)="addEducation()">+</button>
+      <div></div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step *ngIf = "containsHobbies()" [stepControl]="fourthFormGroup" label="Interests">
+    <form [formGroup]="fourthFormGroup">
+      <h3>Fill the form with your hobbies(interests). Note: This section is repeatable (you can add multiple hobbies)</h3>
+      <div class = "row">
+        <div class="col-md-4" *ngFor="let inter of interestsSection; let i=index">
+          <div class="form-group">
+            <mat-form-field appearance="fill">
+              <mat-label>Interest</mat-label>
+              <input matInput [(ngModel)]="inter.hobby" [ngModelOptions]="{standalone: true}" placeholder="Ex. Playing chess" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" (click)="addInterest()">+</button>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step *ngIf = "containsSkills()" [stepControl]="fifthFormGroup" label="Skills">
+    <form [formGroup]="fifthFormGroup">
+      <h3>Fill the form with your skills. Note: This section is repeatable (you can add multiple skills)</h3>
+    <ng-template matStepLabel>Skills</ng-template>
+    <div class = "column">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let s of skillsFromTheForm; let i=index">
+          <div class="form-group">
+            <mat-form-field appearance="fill">
+              <mat-label>Skill</mat-label>
+              <input matInput [(ngModel)]="s.skill" [ngModelOptions]="{standalone: true}" placeholder="Ex. Java" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" (click)="addSkill()">+</button>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+    </form>
+  </mat-step>
+
+  <mat-step  *ngIf = "containsPicture()" [stepControl]="sixthFormGroup" label="Profile picture">
+    <form [formGroup]="sixthFormGroup">
+      <h3>Adding profile picture section (repeatable)</h3>
+      <div class="card p-4">
+        <div class="form-group">
+          <label class="h4 mb-3" for="">Show your picture in Resume</label>
+          <input type="file" class="form-control-file" (change)="fileChanged($event)" aria-describedby="fileHelpId">
+        </div>
+<!--        <img *ngIf="resume.profilePic" [src]="resume.profilePic" class="img-thumbnail">-->
+      </div>
+      <div></div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step  *ngIf = "containsCustom()" [stepControl]="seventhFormGroup" label="Custom section">
+    <form [formGroup]="seventhFormGroup">
+      <h3>Fill the form with your own key-value pairs. Note: This section is repeatable (you can add multiple custom fields)</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Name Of The Section</mat-label>
+        <input matInput placeholder="Ex. References" formControlName="reference" required>
+      </mat-form-field>
+      <div class = "row">
+        <div class="col-md-4" *ngFor="let c of customSections; let i=index">
+          <div class="form-group">
+            <mat-form-field appearance="fill">
+              <mat-label>Name of the field</mat-label>
+              <input matInput [(ngModel)]="c.field" [ngModelOptions]="{standalone: true}" placeholder="Ex. Reference" required>
+            </mat-form-field>
+            <div></div>
+            <mat-form-field appearance="fill">
+              <mat-label>Value of the field</mat-label>
+              <input matInput [(ngModel)]="c.value" [ngModelOptions]="{standalone: true}" placeholder="Ex. Prof. from Faculty" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" (click)="addCustomSection()">+</button>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>
+
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div class = "row previewFirst">
+  <div>
+    <button class="btn btn-primary" (click)="onClickingSave()">Save your CV</button>
+  </div>
+  <div>
+    <button class="btn btn-primary preview" (click)="onClickingPreview()">Preview your CV</button>
+  </div>
+  <br>
+  <div></div>
+</div>
+<br>
+<br>
+<br>
+
+

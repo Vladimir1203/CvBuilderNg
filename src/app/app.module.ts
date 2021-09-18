@@ -25,6 +25,9 @@ import {AuthGuard} from "./service/auth/auth-guard.service";
 import {AuthInterceptor} from "./shared/auth.interceptor";
 import { NewCVComponent } from './new-cv/new-cv.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import { CustomSectionsComponent } from './custom-sections/custom-sections.component';
+import {MatIconModule} from "@angular/material/icon";
+import { TestHomeComponent } from './test-home/test-home.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import {MatStepperModule} from "@angular/material/stepper";
     LogoutComponent,
     HomeComponent,
     TemplateComponent,
-    NewCVComponent
+    NewCVComponent,
+    CustomSectionsComponent,
+    TestHomeComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -54,7 +60,7 @@ import {MatStepperModule} from "@angular/material/stepper";
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
     MatStepperModule,
-
+    MatIconModule,
   ],
   providers: [AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

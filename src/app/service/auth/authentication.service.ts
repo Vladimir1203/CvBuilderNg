@@ -19,7 +19,9 @@ export class AuthenticationService {
   @Output() username: EventEmitter<string> = new EventEmitter();
 
   constructor(private router : Router, private client : HttpClient,
-              private localStorage: LocalStorageService) {}
+              private localStorage: LocalStorageService) {
+    this.token = this.localStorage.retrieve('authenticationToken');
+  }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
     return this.client.post<LoginResponse>('http://localhost:8080/auth/login',
@@ -54,6 +56,7 @@ export class AuthenticationService {
   }
 
   isAuthenticated() {
+   //this.token = this.localStorage.retrieve('authenticationToken');
     return this.token != null;
   }
 

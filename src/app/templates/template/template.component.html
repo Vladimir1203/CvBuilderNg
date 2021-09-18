@@ -1,145 +1,26 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" id = "main-container">
-  <div class="row">
-    <div *ngFor="let template of templates" class="col-md-6 col-xl-3">
-      <div class="card m-b-30">
-        <div class="card-body row">
-          <div class="col-6">
-            <a href=""><img src="{{template?.imageUrl}}" alt="" class="img-fluid rounded-circle w-60"></a>
+<form [formGroup]="checkoutForm">
+  <div class="container" id = "main-container" >
+    <div class="row">
+      <div *ngFor="let template of templates" class="col-md-12 col-xl-6">
+        <div class="card m-b-40">
+          <div class="card-body row">
+            <div class="col-8">
+              <img src="{{template?.imageUrl}}" alt="" class="img-fluid w-80">
+            </div>
           </div>
-          <div class="col-6 card-title align-self-center mb-0">
-            <h5>{{template?.name}}</h5>
-            <p class="m-0">{{template?.premium}}</p>
           </div>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Price : <a href="#">{{template?.price}}</a></li>
-          <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : 000 123-456</li>
-        </ul>
-        <div class="card-body">
-          <div class="float-right btn-group btn-group-sm">
-            <a (click)="onOpenModal(template, 'edit')" href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-            <a (click)="onOpenModal(template, 'delete')" href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
-          </div>
-          <ul class="social-links list-inline mb-0">
-            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
-            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
-            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li>
-          </ul>
-        </div>
-      </div>
-<!--      <button  class="btn btn-primary">Edit</button>-->
-<!--      <button  class="btn btn-link">Delete</button>-->
-    </div>
-  </div>
-</div>
-<button  class="btn btn-link" (click)="onOpenModal(null, 'add')">New template</button>
-<!-- Add Template Modal -->
-<div class="modal fade" id="addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="addTemplateModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addTemplateModalLabel">Add Template</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form #addForm="ngForm" (ngSubmit)="onAddTemplate(addForm)">
-          <div class="form-group">
-            <label for="dateCreated">Date created</label>
-            <input type="text" ngModel name="dateCreated" class="form-control" id="dateCreated" placeholder="Date created" required>
-          </div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
-          </div>
-          <div class="form-group">
-            <label for="premium">Premium</label>
-            <input type="checkbox" ngModel name="premium" class="form-control" id="premium" placeholder="Premium" required>
-          </div>
-          <div class="form-group">
-            <label for="price">Price</label>
-            <input type="text" ngModel name="price" class="form-control" id="price" placeholder="Price" required>
-          </div>
-          <div class="form-group">
-            <label for="imageUrl">Image URL</label>
-            <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="add-Template-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--&lt;!&ndash; Edit Modal &ndash;&gt;-->
-<!--<div class="modal fade" id="updateTemplateModal" tabindex="-1" role="dialog" aria-labelledby="TemplateEditModalLabel" aria-hidden="true">-->
-<!--  <div class="modal-dialog" role="document">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--&lt;!&ndash;        <h5 class="modal-title" id="updateTemplateModalLabel">Edit Template {{editTemplate?.name}}</h5>&ndash;&gt;-->
-<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--          <span aria-hidden="true">&times;</span>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <form #editForm="ngForm">-->
-<!--          <div class="form-group">-->
-<!--            <label for="name">Name</label>-->
-<!--&lt;!&ndash;            <input type="text" ngModel="{{editTemplate?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">&ndash;&gt;-->
-<!--          </div>-->
-<!--&lt;!&ndash;          <input type="hidden" ngModel="{{editTemplate?.id}}" name="id" class="form-control" id="id" placeholder="Email">&ndash;&gt;-->
-<!--&lt;!&ndash;          <input type="hidden" ngModel="{{editTemplate?.TemplateCode}}" name="userCode" class="form-control" id="userCode" placeholder="Email">&ndash;&gt;-->
-<!--          <div class="form-group">-->
-<!--            <label for="email">Email Address</label>-->
-<!--&lt;!&ndash;            <input type="email" ngModel="{{editTemplate?.email}}" name="email" class="form-control" id="email" placeholder="Email">&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="phone">Job title</label>-->
-<!--&lt;!&ndash;            <input type="text" ngModel="{{editTemplate?.jobTitle}}" name="jobTitle" class="form-control" id="jobTitle" placeholder="Job title">&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="phone">Phone</label>-->
-<!--&lt;!&ndash;            <input type="text" ngModel="{{editTemplate?.phone}}" name="phone" class="form-control" id="phone" name="phone" placeholder="Phone">&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="phone">Image URL</label>-->
-<!--&lt;!&ndash;            <input type="text" ngModel="{{editTemplate?.imageUrl}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="modal-footer">-->
-<!--            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
-<!--&lt;!&ndash;            <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>&ndash;&gt;-->
-<!--          </div>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteTemplateModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModelLabel">Delete Template</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-<!--        <p>Are you sure you want to delete Template {{deleteTemplate?.name}}?</p>-->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-<!--          <button (click)="onDeleteEmloyee(deleteTemplate?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>-->
         </div>
       </div>
     </div>
+</form>
+<div><br><br></div>
+<div class = "row goToRight">
+  <div>
+    <button  class="btn btn-primary previewFirst" (click)="createBasicCV()">Create basic Template</button>
+  </div>
+  <div></div>
+  <div>
+    <button  class="btn btn-primary preview" (click)="createCustomCV()">Create custom Template</button>
   </div>
 </div>
-
-
-

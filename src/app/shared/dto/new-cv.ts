@@ -1,11 +1,11 @@
 import {BasicInformationSection} from "./basic-information-section";
 import {WorkExperienceSection} from "./work-experience-section";
 import {EducationSection} from "./education-section";
-import {InterestsSection} from "./interests-section";
+import {InterestSection} from "./interest-section";
 
 export class NewCv{
   public basicInformationSection : BasicInformationSection
   public workExperienceSection : WorkExperienceSection
   public educationSection : EducationSection
-  public interestsSection : InterestsSection
+  public interestSection : InterestSection
 }

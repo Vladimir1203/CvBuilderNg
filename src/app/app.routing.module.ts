@@ -7,6 +7,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {TemplateComponent} from "./templates/template/template.component";
 import { AuthGuard } from './service/auth/auth-guard.service';
 import {NewCVComponent} from "./new-cv/new-cv.component";
+import {CustomSectionsComponent} from "./custom-sections/custom-sections.component";
 
 const routes : Routes = [
   { path:'', component:LoginComponent },
@@ -16,6 +17,7 @@ const routes : Routes = [
   { path:'registration', component:RegistrationComponent},
   { path:'templates', component:TemplateComponent, canActivate: [AuthGuard]},
   { path:'newCV', component:NewCVComponent, canActivate: [AuthGuard]},
+  { path:'customSections', component:CustomSectionsComponent, canActivate: [AuthGuard]},
   { path:'**', component:LoginComponent }
 ];
 
