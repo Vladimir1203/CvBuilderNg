@@ -7,11 +7,11 @@
     <h3 class="text-dark mt-5">Fill free to choose your sections and fields manually! :)</h3>
   </div>
 </div>
-<br>
 
 
 <!--sections-->
 <div *ngFor="let section of templateSec">
+  <br><br><br>
 <div class="row">
   <div class="col-md-4">
     <div class="form-group app-label">
@@ -31,7 +31,7 @@
     <div class="job-detail mt-2 p-4">
       <div class="custom-form">
         <form>
-        <div class = "row" *ngFor="let o of optional">
+        <div class = "row" *ngFor="let o of section.optionals ">
           <div class="col-md-4">
             <div class="form-group app-label">
               <label class="text-muted">Data type</label>
@@ -51,18 +51,21 @@
             </div>
           </div>
 
+
         </div>
 
 
           <div class="col-md-4">
             <div class="form-group app-label">
               <br>
-              <button class="btn btn-default" (click)="addField()">+</button>
+              <button class="btn btn-default" (click)="addField(templateSec.indexOf(section))">+</button>
             </div>
           </div>
 
 
-
+          <div>
+            <button *ngIf = "templateSec.length-1 === templateSec.indexOf(section)" class="btn btn_down" (click)="addNewSection(templateSec.indexOf(section))">Add new section</button>
+          </div>
 
         </form>
       </div>
@@ -70,14 +73,8 @@
   </div>
 </div>
 
-<div>
-  <button class="btn btn_down" (click)="addNewSection()">Add new section</button>
-</div>
-  <br><br>
-
 
 </div>
-
 
 
 
