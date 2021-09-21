@@ -28,6 +28,9 @@ import {MatStepperModule} from "@angular/material/stepper";
 import { CustomSectionsComponent } from './custom-sections/custom-sections.component';
 import {MatIconModule} from "@angular/material/icon";
 import { TestHomeComponent } from './test-home/test-home.component';
+import { PaypalComponent } from './paypal/paypal.component';
+import { AllCustomComponent } from './all-custom/all-custom.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -42,26 +45,29 @@ import { TestHomeComponent } from './test-home/test-home.component';
     NewCVComponent,
     CustomSectionsComponent,
     TestHomeComponent,
+    PaypalComponent,
+    AllCustomComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    AlertModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    MatToolbarModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    NgxWebstorageModule.forRoot(),
-    MatStepperModule,
-    MatIconModule,
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        AlertModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        MatToolbarModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        NgxWebstorageModule.forRoot(),
+        MatStepperModule,
+        MatIconModule,
+        MatCheckboxModule,
+    ],
   providers: [AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     ],

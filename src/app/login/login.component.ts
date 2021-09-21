@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginRequestPayload: LoginRequestPayload;
   private isError: boolean;
-
+  loggedUsername : string;
   constructor(private router : Router, private authService : AuthenticationService) {
     this.loginRequestPayload = {
       username: '',
@@ -36,11 +36,14 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginRequestPayload).subscribe(data => {
       this.isError = false;
+      this.loggedUsername = this.loginRequestPayload.username;
       this.router.navigateByUrl('home');
     }, error => {
       this.isError = true;
       throwError(error);
     });
+
+    this.authService.premiumUser(this.loginRequestPayload)
   }
 
   onClickingRegister() {

@@ -5,7 +5,10 @@ import {AuthenticationService} from "../service/auth/authentication.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService) {
+    this.authService.getToken()
+
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('Intercepted!', req);

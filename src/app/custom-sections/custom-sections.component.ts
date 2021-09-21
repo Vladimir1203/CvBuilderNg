@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {NewCVComponent} from "../new-cv/new-cv.component";
 import {FillSectionsService} from "../service/fill-sections.service";
+import {AuthenticationService} from "../service/auth/authentication.service";
 
 @Component({
   selector: 'app-custom-sections',
@@ -16,13 +17,15 @@ export class CustomSectionsComponent implements OnInit {
   hobbiesVisible : boolean = true;
   pictureVisible : boolean = true;
   customVisible : boolean = true;
+  userPremium : boolean = false;
   sections : string[] = [];
 
-  constructor(private router : Router, private fillSectionService : FillSectionsService) {
+  constructor(private router : Router, private fillSectionService : FillSectionsService, private authService : AuthenticationService) {
 
   }
 
   ngOnInit(): void {
+    this.userPremium = this.authService.ispremiumuser
   }
 
   changeStateSkills() {

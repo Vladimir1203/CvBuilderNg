@@ -28,4 +28,9 @@ export class TemplateService {
   public deleteTemplate(templateId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/templates/delete/${templateId}`);
   }
+
+  public save(): Observable<Template[]> {
+    return this.http.get<Template[]>(`${this.apiServerUrl}/auth/premium`);
+  }
+
 }

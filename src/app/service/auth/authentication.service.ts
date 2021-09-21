@@ -1,12 +1,14 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {LocalStorageService} from "ngx-webstorage";
 import {Observable} from "rxjs";
 import {RegisterRequestPayload} from "../../shared/dto/register-request.payload";
 import {LoginRequestPayload} from "../../shared/dto/login-request.payload";
 import {LoginResponse} from "../../shared/dto/login-response.payload";
 import {map} from "rxjs/operators";
+import {Template} from "../../templates/template/template";
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,9 @@ import {map} from "rxjs/operators";
 export class AuthenticationService {
 
   token : string;
+
+  ispremiumuser : boolean = false;
+
 
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
@@ -24,6 +29,7 @@ export class AuthenticationService {
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
+    console.log(this.client)
     return this.client.post<LoginResponse>('http://localhost:8080/auth/login',
       loginRequestPayload).pipe(map(data => {
       this.localStorage.store('authenticationToken', data.authenticationToken);
@@ -56,11 +62,26 @@ export class AuthenticationService {
   }
 
   isAuthenticated() {
-   //this.token = this.localStorage.retrieve('authenticationToken');
+   this.token = this.localStorage.retrieve('authenticationToken');
     return this.token != null;
   }
 
   getToken() {
     return this.token;
+  }
+
+  savePremium(registerRequestPayload : RegisterRequestPayload){
+    return this.client.post('http://localhost:8080/auth/premium', registerRequestPayload).subscribe();
+  }
+
+  premiumUser(loginRequestPayload: LoginRequestPayload) {
+    return this.client.post('http://localhost:8080/auth/isPremium', loginRequestPayload).subscribe(
+      (response : boolean) => {
+        this.ispremiumuser = response;
+      },
+      (error : HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 }

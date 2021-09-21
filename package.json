@@ -31,7 +31,8 @@
     "pdfmake": "^0.2.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "creditcardpayments": "^1.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.0.4",

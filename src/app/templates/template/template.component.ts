@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Template} from "./template";
 import {TemplateService} from "../../service/template.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
 import { FormBuilder } from '@angular/forms';
+import {RegisterRequestPayload} from "../../shared/dto/register-request.payload";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -18,7 +20,7 @@ export class TemplateComponent implements OnInit {
   });
   templates : Template[];
 
-  constructor(private formBuilder: FormBuilder, private templateService : TemplateService, private router : Router) { }
+  constructor(private client : HttpClient, private formBuilder: FormBuilder, private templateService : TemplateService, private router : Router) { }
 
   ngOnInit(): void {
     this.getTemplates();
@@ -35,40 +37,6 @@ export class TemplateComponent implements OnInit {
     )
   }
 
-  onOpenModal(template : Template, mode : string){
-    const container = document.getElementById('main-container');
-
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-toggle', 'modal');
-    if(mode === 'add'){
-      button.setAttribute('data-target', '#addTemplateModal');
-    }
-    if(mode === 'edit'){
-      button.setAttribute('data-target', '#updateTemplateModal');
-    }
-    if(mode === 'delete'){
-      button.setAttribute('data-target', '#deleteTemplateModal');
-    }
-    container.appendChild(button);
-    button.click();
-  }
-
-
-  onAddTemplate(addForm: NgForm) {
-    //document.getElementById('add-template-form').click();
-    this.templateService.addTemplate(addForm.value).subscribe(
-      (response : Template) =>{
-        console.log(response);
-        this.getTemplates();
-      },
-      (error : HttpErrorResponse) =>{
-        alert(error.message)
-      }
-    )
-  }
-
   createBasicCV() {
     this.router.navigate(['/newCV'])
   }
@@ -76,4 +44,5 @@ export class TemplateComponent implements OnInit {
   createCustomCV() {
     this.router.navigate(['/customSections'])
   }
+
 }
