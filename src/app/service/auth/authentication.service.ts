@@ -78,6 +78,7 @@ export class AuthenticationService {
     return this.client.post('http://localhost:8080/auth/isPremium', loginRequestPayload).subscribe(
       (response : boolean) => {
         this.ispremiumuser = response;
+        this.localStorage.store('userPremium', response)
       },
       (error : HttpErrorResponse) => {
         alert(error.message);

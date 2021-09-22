@@ -10,6 +10,7 @@ import {NewCVComponent} from "./new-cv/new-cv.component";
 import {CustomSectionsComponent} from "./custom-sections/custom-sections.component";
 import {PaypalComponent} from "./paypal/paypal.component";
 import {AllCustomComponent} from "./all-custom/all-custom.component";
+import {AllCustomStepperComponent} from "./all-custom-stepper/all-custom-stepper.component";
 
 const routes : Routes = [
   { path:'', component:LoginComponent },
@@ -22,6 +23,7 @@ const routes : Routes = [
   { path:'customSections', component:CustomSectionsComponent, canActivate: [AuthGuard]},
   { path:'paypal', component:PaypalComponent, canActivate: [AuthGuard]},
   { path:'allCustom', component:AllCustomComponent, canActivate: [AuthGuard]},
+  { path:'allCustomStepper', component:AllCustomStepperComponent, canActivate: [AuthGuard]},
   { path:'**', component:LoginComponent }
 ];
 

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {NewCVComponent} from "../new-cv/new-cv.component";
 import {FillSectionsService} from "../service/fill-sections.service";
 import {AuthenticationService} from "../service/auth/authentication.service";
+import {LocalStorageService} from "ngx-webstorage";
 
 @Component({
   selector: 'app-custom-sections',
@@ -20,12 +21,12 @@ export class CustomSectionsComponent implements OnInit {
   userPremium : boolean = false;
   sections : string[] = [];
 
-  constructor(private router : Router, private fillSectionService : FillSectionsService, private authService : AuthenticationService) {
+  constructor(private router : Router, private fillSectionService : FillSectionsService, private authService : AuthenticationService,private localStorage: LocalStorageService) {
 
   }
 
   ngOnInit(): void {
-    this.userPremium = this.authService.ispremiumuser
+    this.userPremium = this.localStorage.retrieve("userPremium")
   }
 
   changeStateSkills() {

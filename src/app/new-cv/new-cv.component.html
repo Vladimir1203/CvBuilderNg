@@ -45,7 +45,7 @@
       <h3>Fill the form with your work experience. Note: This section is repeatable (you can add multiple experiences)</h3>
       <div class = "row">
         <div class="col-md-4" *ngFor="let ex of workExperienceSections; let i=index">
-          <div class="form-group">
+            <div class="form-group">
             <mat-form-field appearance="fill">
               <mat-label>Job title</mat-label>
               <input matInput [(ngModel)]="ex.jobTitle" [ngModelOptions]="{standalone: true}" placeholder="Ex. Junior Java developer" required>

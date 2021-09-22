@@ -48,3 +48,8 @@ body{
 .spacing{
   margin-left: 25px;
 }
+
+.highlight {
+  color: #2ac5ed;
+  font-weight:bold;
+}

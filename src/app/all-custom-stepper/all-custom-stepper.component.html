@@ -1,0 +1,46 @@
+<ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'">Make your screen smaller to see a vertical stepper</div>
+  <div *ngSwitchCase="'vertical'">Make your screen larger to see a horizontal stepper</div>
+</ng-container>
+
+<mat-stepper id="content"
+             class="example-stepper"
+             [orientation]="(stepperOrientation | async)!">
+
+  <mat-step *ngFor="let section of templateSec1" [stepControl]="firstFormGroup" label="{{section.name}}">
+    <h3>Fill the form with your information.</h3>
+    <div class = "row">
+    <form *ngFor="let sameSection of section.optionals1" [formGroup]="firstFormGroup">
+
+      <div class="form-group">
+          <div  *ngFor="let o of sameSection.optionals">
+            <mat-form-field appearance="fill">
+              <mat-label>{{o.optionalColumn}}</mat-label>
+              <input matInput formControlName="name" required>
+            </mat-form-field>
+            <div></div>
+          </div>
+      </div>
+
+      <div></div>
+    </form>
+    </div>
+    <div> <button [hidden]="!section.repeatable" class="btn btn-default" (click)="addSection(templateSec1.indexOf(section))">+</button></div>
+    <button mat-button matStepperNext>Next</button>
+  </mat-step>
+
+</mat-stepper>
+
+<div class = "row previewFirst">
+  <div>
+    <button class="btn btn-primary" (click)="onClickingSave()">Save your CV</button>
+  </div>
+  <div>
+    <button class="btn btn-primary preview" (click)="onClickingPreview()">Preview your CV</button>
+  </div>
+  <br>
+  <div></div>
+</div>
+<br>
+<br>
+<br>

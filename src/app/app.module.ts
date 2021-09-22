@@ -31,6 +31,7 @@ import { TestHomeComponent } from './test-home/test-home.component';
 import { PaypalComponent } from './paypal/paypal.component';
 import { AllCustomComponent } from './all-custom/all-custom.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AllCustomStepperComponent } from './all-custom-stepper/all-custom-stepper.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     TestHomeComponent,
     PaypalComponent,
     AllCustomComponent,
+    AllCustomStepperComponent,
 
   ],
     imports: [
