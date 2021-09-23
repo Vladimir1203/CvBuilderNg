@@ -10,18 +10,17 @@
   <mat-step *ngFor="let section of templateSec1" [stepControl]="firstFormGroup" label="{{section.name}}">
     <h3>Fill the form with your information.</h3>
     <div class = "row">
-    <form *ngFor="let sameSection of section.optionals1" [formGroup]="firstFormGroup">
+    <form *ngFor="let sameSection of section.optionals1">
 
       <div class="form-group">
-          <div  *ngFor="let o of sameSection.optionals">
+          <div *ngFor="let o of sameSection.optionals">
             <mat-form-field appearance="fill">
               <mat-label>{{o.optionalColumn}}</mat-label>
-              <input matInput formControlName="name" required>
+              <input matInput [(ngModel)]="o.value"  [ngModelOptions]="{standalone: true}" required>
             </mat-form-field>
             <div></div>
           </div>
       </div>
-
       <div></div>
     </form>
     </div>
