@@ -67,21 +67,12 @@ export class AllCustomComponent implements OnInit {
     this.templateSec[index].optionals[0] = new Optional()
     this.templateSec[index].optionals[0].optionalColumn = ''
     this.templateSec[index].optionals[0].optionalType = ''
+    this.templateSec[index].optionals[0].value = ''
     this.templateSec[index].name = ''
     this.templateSec[index].repeatable = false
   }
 
 
-  results() {
-    for(let i = 0; i<this.templateSec.length; i++){
-      console.log("naziv: " + this.templateSec[i].name)
-      console.log("repeatable: " + this.templateSec[i].repeatable)
-      for(let j = 0; j<this.templateSec[i].optionals.length; j++) {
-        console.log("polje " + this.templateSec[i].optionals[j].optionalColumn)
-        console.log("type " + this.templateSec[i].optionals[j].optionalType)
-      }
-    }
-  }
 
   saveConfiguration() {
     this.customService.sendCustomConfiguration(this.templateSec)

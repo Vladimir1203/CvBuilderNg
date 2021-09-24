@@ -706,6 +706,7 @@ export class NewCVComponent implements OnInit {
   }
 
 
+
 }
 
 
