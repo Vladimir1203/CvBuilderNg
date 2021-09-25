@@ -28,6 +28,23 @@
     <button mat-button matStepperNext>Next</button>
   </mat-step>
 
+  <mat-step  *ngIf = this.profilePicture [stepControl]="firstFormGroup" label="Profile picture">
+    <form>
+      <h3>Adding profile picture section (repeatable)</h3>
+      <div class="card p-4">
+        <div class="form-group">
+          <label class="h4 mb-3">Show your picture in Resume</label>
+          <input type="file" class="form-control-file" (change)="fileChanged($event)" aria-describedby="fileHelpId">
+        </div>
+      </div>
+      <div></div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
 </mat-stepper>
 
 <div class = "row previewFirst">

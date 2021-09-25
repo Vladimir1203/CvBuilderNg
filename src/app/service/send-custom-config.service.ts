@@ -6,11 +6,12 @@ import {TemplateSec} from "../shared/dto/template-sec";
 })
 export class SendCustomConfigService {
   templateSec : TemplateSec[] = []
-
+  profilePicture : boolean
   constructor() { }
 
-  sendCustomConfiguration(templateSec: TemplateSec[]) {
+  sendCustomConfiguration(templateSec: TemplateSec[], profilePicture : boolean) {
     this.templateSec = templateSec
+    this.profilePicture = profilePicture
   }
 
   getCustomConfiguration() {

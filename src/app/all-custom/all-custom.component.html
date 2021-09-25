@@ -8,6 +8,22 @@
   </div>
 </div>
 
+<div class = "row">
+<div class = "column">
+  <div class="form-group app-label">
+    <br><br>
+    <label class="text-muted">Create a CV with the profile picture</label>
+    <br>
+  </div>
+
+  <mat-checkbox color="primary" [(ngModel)]="profilePicture" [ngModelOptions]="{standalone: true}" class = "check_custom"></mat-checkbox>
+</div>
+  <div class="form-group app-label make-distance" >
+    <br><br>
+    <label class="text-muted">Create a CV with the profile picture</label>
+    <br>
+  </div>
+</div>
 
 <!--sections-->
 <div *ngFor="let section of templateSec">

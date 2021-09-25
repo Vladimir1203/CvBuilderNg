@@ -13,6 +13,7 @@ import {style} from "@angular/animations";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import {ExternalDataRetrievedFromServer} from "../shared/dto/externalDataRetrievedFromServer";
+import {Resume} from "../new-cv/new-cv.component";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -35,6 +36,8 @@ export class AllCustomStepperComponent implements OnInit {
   idOption1 : number = 0
 
 
+  resume = new Resume();
+
   optionals1 : Optional1[] = []
   optionals : Optional[] = []
   optional1 : Optional1
@@ -52,6 +55,7 @@ export class AllCustomStepperComponent implements OnInit {
   addingOptional1 = new Optional1
   optionsInit : Optional[] = []
   optionalInit : Optional
+  profilePicture = false
 
   constructor(private customConfigService : SendCustomConfigService,private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
     this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
@@ -59,6 +63,7 @@ export class AllCustomStepperComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.profilePicture = this.customConfigService.profilePicture
     this.templateSec = this.customConfigService.getCustomConfiguration()
     for(let i = 0; i < this.templateSec.length; i++){
       this.templateSec1[i] = new TemplateSec1()
@@ -107,6 +112,7 @@ export class AllCustomStepperComponent implements OnInit {
   }
 
   onClickingSave() {
+    this.showPdf1()
   }
 
   onClickingPreview() {
@@ -116,11 +122,12 @@ export class AllCustomStepperComponent implements OnInit {
   async showPdf() {
 
     let docDefinition = {
+
       content: [
         {
           columns: [[
-            this.getOneCustomObject()
-
+            this.getProfilePicObject(),
+            this.getAllCustomObjectsAndHeaders()
           ]]
         }
 
@@ -131,13 +138,15 @@ export class AllCustomStepperComponent implements OnInit {
   }
 
 
-  getOneCustomObject(){
+  getAllCustomObjectsAndHeaders(){
     let array = []
-    array[0] = this.getCustomObjectHeader(this.templateSec1[0].name)
-    array[1] = this.getCustomObjectBody(this.templateSec1[0])
+    let brojacEl = 0
+    for(let i = 0; i < this.templateSec1.length; i++){
+      array[brojacEl++] = this.getCustomObjectHeader(this.templateSec1[i].name)
+      array[brojacEl++] = this.getCustomObjectBody(this.templateSec1[i])
+    }
     return array
   }
-
 
   getCustomObjectBody(templateSec1: TemplateSec1) {
     let array = []
@@ -147,9 +156,17 @@ export class AllCustomStepperComponent implements OnInit {
     return array
   }
 
-  getCustomObjectOptional1Info(optional1: Optional1) {
+  getCustomObjectOptional1Info(optional1: Optional1){
+    let array = []
+    for(let i = 0; i < optional1.optionals.length; i++){
+      array[i] = this.getCustomObjectOptionalInfo(optional1.optionals[i])
+    }
+    return array
+  }
+
+  getCustomObjectOptionalInfo(optional: Optional) {
     return {
-      text : optional1.optionals[0].optionalColumn + " :" + optional1.optionals[0].value,
+      text : optional.optionalColumn + " :" + optional.value,
       alignment: 'left',
       fontSize: 12,
       bold: true
@@ -166,113 +183,66 @@ export class AllCustomStepperComponent implements OnInit {
     }
   }
 
-  getAllCustomObjectsHeaders(){
-    let array = []
-    for(let i = 0; i < this.templateSec1.length; i++){
-      array[i] = this.getCustomObjectHeader(this.templateSec1[i].name)
-    }
-    return array
-}
-
-  getAllCustomObjects(){
-    let array = []
-    array[0] = this.getAllCustomObjectsHeaders()
-    array[1] = this.getCustomObjectHeader("test")
-    return array
-}
-
-
-
-
-
-
-
-
-
-
-
-  printing(){
-    for(let i =0; i < this.templateSec1.length; i++){
-      if(this.templateSec1[i].repeatable){
-        this.createTableFromTheRepeatableSection(this.templateSec1[i])
-      }
-
-      this.generateBasicSection(this.templateSec1[i])
-    }
+  fileChanged(e) {
+    const file = e.target.files[0];
+    this.getBase64(file);
   }
 
-  createTableFromTheRepeatableSection(templateSec1: TemplateSec1) {
-    let columnNumber = templateSec1.optionals1[0].optionals.length
-
-    return {
-
-
+  getBase64(file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      console.log(reader.result);
+      this.resume.profilePic = reader.result as string;
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
     };
   }
 
-
-  generateBasicSection(templateSec1: TemplateSec1) {
-
-    let basicRow = '';
-    for (let i = 0; i < templateSec1.optionals1[0].optionals.length; i++) {
-      basicRow = basicRow  + this.createBasicRow(templateSec1.optionals1[0].optionals[i].optionalColumn, templateSec1.optionals1[0].optionals[i].value) + ', '
+  getProfilePicObject() {
+    if (this.resume.profilePic) {
+      return {
+        image: this.resume.profilePic ,
+        width: 155,
+        absolutePosition: { x: 350, y: 40 }
+      };
     }
-    return basicRow
+    return null;
   }
 
-  createBasicRow(optionalColumn: string, value: string) {
-    return{
-      text : "\r" + optionalColumn +  ": " + value,
-      style: 'name',
-      alignment: 'left'
-    }
+  async showPdf1() {
 
+    let docDefinition = {
+
+      content: [
+        {
+          columns: [[
+            this.table(this.rowsForCreatingTable(), this.columnsForCreatingTable())
+          ]]
+        }
+
+      ]
+
+    };
+    pdfMake.createPdf(docDefinition).open();
   }
 
-  getEducationObjectHeader() {
+  table(data, columns) {
     return {
-      text: "Education section",
-      fontSize: 18,
-      bold: true,
-      margin: [0, 20, 0, 10],
-      color: '#339999',
-    }
+      table: {
+        headerRows: 1,
+        body: this.buildTableBody(data, columns)
+      },
+      layout: 'lightHorizontalLines'
+    };
   }
 
-  test = 'mojTest'
-
-  concatAll(ext : Array<any>){
-    for(let i = 0; i < ext.length; i++){
-      if(i != 0)
-      ext = [...ext[i-1], ...ext[i]]
-    }
-    return ext
-  }
-
-  externalDataRetrievedFromServer(){
-   let ext = []
-
-    for (let i = 0; i < this.templateSec1[0].optionals1[0].optionals.length; i++) {
-      let object = {}
-      object[this.templateSec1[0].optionals1[0].optionals[i].optionalColumn] = this.templateSec1[0].optionals1[0].optionals[i].value;
-      ext.push({object})
-    }
-    this.concatAll(ext)
-    return ext
-  }
-
-   externalDataRetrievedFromServerReal = [
-    { myName: 'Juan', myAge: 34 },
-    { myName: 'John', myAge: 27 },
-    { myName: 'Elizabeth', myAge: 30 },
-  ];
-
-   buildTableBody(data, columns) {
+  buildTableBody(data, columns) {
     var body = [];
 
     body.push(columns);
-    console.log(data)
-    data = JSON.parse(data)
+
     data.forEach(function(row) {
       var dataRow = [];
 
@@ -286,89 +256,26 @@ export class AllCustomStepperComponent implements OnInit {
     return body;
   }
 
-   table(data, columns) {
-    return {
-      table: {
-        headerRows: 1,
-        body: this.buildTableBody(data, columns)
-      },
-      layout: 'lightHorizontalLines'
-    };
+  rowsForCreatingTable(){
+    let ext = []
+
+      for (let i = 0; i < this.templateSec1[0].optionals1.length; i++) {
+        let object = {}
+        for(let j = 0; j < this.templateSec1[0].optionals1[i].optionals.length; j++) {
+          object[this.templateSec1[0].optionals1[i].optionals[j].optionalColumn] = this.templateSec1[0].optionals1[i].optionals[j].value;
+        }
+        ext.push(object)
+    }
+    return ext
   }
 
-  rowsForCreatingTable(){
-    let helpArray = []
-    for(let i = 0; i < this.templateSec1[0].optionals1[0].optionals.length; i++){
-      helpArray.push(this.templateSec1[0].optionals1[0].optionals[i].value)
-    }
-    var data = JSON.stringify(helpArray)
-    return JSON.parse(data)
-  }
   columnsForCreatingTable(){
-     let helpArray = []
+    let helpArray = []
     for(let i = 0; i < this.templateSec1[0].optionals1[0].optionals.length; i++){
       helpArray.push(this.templateSec1[0].optionals1[0].optionals[i].optionalColumn)
     }
     return helpArray
   }
-
-  buildTableBodyTest(data, columns) {
-    var body = [];
-
-    body.push(columns);
-
-    data.forEach(function (row) {
-      var dataRow = [];
-
-      columns.forEach(function (column) {
-        dataRow.push(row[column].toString());
-      });
-      body.push(dataRow);
-    });
-
-// Fix table headers
-    switch (columns[0]) {
-      case "who":
-        columns[0] = "As a...";
-        columns[1] = "I want to...";
-        columns[2] = "So I can..";
-        break;
-      case "name":
-        columns[0] = "Name";
-        columns[1] = "Description";
-        break;
-      default:
-        console.log(`Not found`);
-    }
-    return body;
-  }
-
-
-  sourceData = [{ name: 'Bartek', age: 34 },
-    { name: 'John', age: 27 },
-    { name: 'Elizabeth', age: 30 }]
-
-  bodyData = [];
-  dd1 = {
-    content: [
-      {
-        table: {
-          body: this.bodyData
-        }
-      }
-    ]
-  }
-  creatingRowsI(){
-    this.sourceData.forEach(function(sourceRow) {
-      var dataRow = [];
-
-      dataRow.push(sourceRow.name);
-      dataRow.push(sourceRow.age);
-
-      this.bodyData.push(dataRow)
-    });
-  }
-
 
 
 }

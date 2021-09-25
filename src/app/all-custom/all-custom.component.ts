@@ -23,6 +23,8 @@ export class AllCustomComponent implements OnInit {
   //ovo je test
   templateSection : TemplateSec
   optionalSection : Optional
+  profilePicture: false;
+
   constructor(private router : Router, private customService : SendCustomConfigService) {
     this.dataTypes.push("Integer")
     this.dataTypes.push("Double")
@@ -75,7 +77,7 @@ export class AllCustomComponent implements OnInit {
 
 
   saveConfiguration() {
-    this.customService.sendCustomConfiguration(this.templateSec)
+    this.customService.sendCustomConfiguration(this.templateSec, this.profilePicture)
     this.router.navigate(['/allCustomStepper'])
   }
 }
