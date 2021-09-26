@@ -20,7 +20,7 @@
 </div>
   <div class="form-group app-label make-distance" >
     <br><br>
-    <label class="text-muted">Create a CV with the profile picture</label>
+    <label class="text-muted">Note: Create sections in the order you want to show them in your CV.</label>
     <br>
   </div>
 </div>
@@ -46,42 +46,43 @@
   <div class="col-lg-12">
     <div class="job-detail mt-2 p-4">
       <div class="custom-form">
-        <form>
-        <div class = "row" *ngFor="let o of section.optionals ">
-          <div class="col-md-4">
-            <div class="form-group app-label">
-              <label class="text-muted">Data type</label>
-              <div class="form-button">
-                <select [(ngModel)]="o.optionalType" [ngModelOptions]="{standalone: true}" class="nice-select">
-                  <option *ngFor = "let i of dataTypes">{{i}}</option>
-                </select>
+
+        <form [formGroup]="firstFormGroup">
+              <div class = "row" *ngFor="let o of section.optionals ">
+                <div class="col-md-4">
+                  <div class="form-group app-label">
+                    <label class="text-muted">Data type</label>
+                    <div class="form-button">
+                      <select [(ngModel)]="o.optionalType" [ngModelOptions]="{standalone: true}" class="nice-select">
+                        <option *ngFor = "let i of dataTypes">{{i}}</option>
+                      </select>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div>
+                    <label class="text-muted">Field name</label>
+                    <input [(ngModel)]="o.optionalColumn" [ngModelOptions]="{standalone: true}" type="text" class="form-control" required>
+                  </div>
+                </div>
+
 
               </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group app-label">
-              <label class="text-muted">Field name</label>
-              <input [(ngModel)]="o.optionalColumn" [ngModelOptions]="{standalone: true}" type="text" class="form-control resume" placeholder="">
-            </div>
-          </div>
 
 
-        </div>
+                <div class="col-md-4">
+                  <div class="form-group app-label">
+                    <br>
+                    <button color="primary" class="btn btn-default" (click)="addField(templateSec.indexOf(section))">+</button>
+                  </div>
+                </div>
 
 
-          <div class="col-md-4">
-            <div class="form-group app-label">
-              <br>
-              <button color="primary" class="btn btn-default" (click)="addField(templateSec.indexOf(section))">+</button>
-            </div>
-          </div>
-
-
-          <div>
-            <button *ngIf = "templateSec.length-1 === templateSec.indexOf(section)" class="btn btn_down" (click)="addNewSection(templateSec.indexOf(section))">Add new section</button>
-          </div>
+                <div>
+                  <button *ngIf = "templateSec.length-1 === templateSec.indexOf(section)" class="btn btn_down" (click)="addNewSection(templateSec.indexOf(section))">Add new section</button>
+                </div>
 
         </form>
       </div>
@@ -102,3 +103,4 @@
   </div>
   <br><br>
 </div>
+

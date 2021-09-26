@@ -39,4 +39,5 @@ export class PaypalComponent implements OnInit {
     this.authService.savePremium(this.registerRequestPayload)
     this.authService.ispremiumuser = true
   }
+
 }

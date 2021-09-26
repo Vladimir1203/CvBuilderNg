@@ -27,11 +27,11 @@ import { NewCVComponent } from './new-cv/new-cv.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import { CustomSectionsComponent } from './custom-sections/custom-sections.component';
 import {MatIconModule} from "@angular/material/icon";
-import { TestHomeComponent } from './test-home/test-home.component';
 import { PaypalComponent } from './paypal/paypal.component';
 import { AllCustomComponent } from './all-custom/all-custom.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AllCustomStepperComponent } from './all-custom-stepper/all-custom-stepper.component';
+import { CustomTemplateComponent } from './custom-template/custom-template.component';
 
 @NgModule({
   declarations: [
@@ -45,10 +45,10 @@ import { AllCustomStepperComponent } from './all-custom-stepper/all-custom-stepp
     TemplateComponent,
     NewCVComponent,
     CustomSectionsComponent,
-    TestHomeComponent,
     PaypalComponent,
     AllCustomComponent,
     AllCustomStepperComponent,
+    CustomTemplateComponent,
 
   ],
     imports: [

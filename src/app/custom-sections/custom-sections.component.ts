@@ -59,7 +59,7 @@ export class CustomSectionsComponent implements OnInit {
 
     this.fillSectionService.fillTheChosenSections(this.sections)
 
-    this.router.navigate(['/newCV'])
+    this.router.navigate(['/demoCV'])
 
   }
 }

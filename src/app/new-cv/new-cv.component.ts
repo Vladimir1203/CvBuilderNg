@@ -232,23 +232,10 @@ export class NewCVComponent implements OnInit {
     //   }, error => console.log('Saving CV Failed! Please try again'));
   }
 
-  generatePdf(action = 'open') {
-    const documentDefinition = null;
-
-    switch (action) {
-      case 'open': pdfMake.createPdf(documentDefinition).open(); break;
-      case 'print': pdfMake.createPdf(documentDefinition).print(); break;
-      case 'download': pdfMake.createPdf(documentDefinition).download(); break;
-
-      default: pdfMake.createPdf(documentDefinition).open(); break;
-    }
-
-  }
 
   addSkill() {
     this.skillsFromTheForm.push(new SkillSection)
     this.resume.skills.push(new Skill(""));
-    //this.cd.detectChanges()
   }
 
   addInterest() {

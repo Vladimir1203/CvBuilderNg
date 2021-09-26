@@ -38,11 +38,11 @@ export class TemplateComponent implements OnInit {
   }
 
   createBasicCV() {
-    this.router.navigate(['/newCV'])
+    this.router.navigate(['/demoCV  '])
   }
 
   createCustomCV() {
-    this.router.navigate(['/customSections'])
+    this.router.navigate(['/customDemoCV'])
   }
 
 }

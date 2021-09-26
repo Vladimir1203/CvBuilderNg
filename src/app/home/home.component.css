@@ -34,3 +34,11 @@
   color: #2ac5ed;
   font-weight:bold;
 }
+
+.position-to-center{
+  margin-left: 300px;
+}
+
+.position-next-to{
+  margin-left: 50px;
+}

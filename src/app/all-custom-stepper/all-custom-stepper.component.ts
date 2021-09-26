@@ -9,10 +9,8 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {TemplateSec1} from "../shared/dto/template-sec1";
 import {Optional1} from "../shared/dto/optional1";
 import {Optional} from "../shared/dto/optional";
-import {style} from "@angular/animations";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import {ExternalDataRetrievedFromServer} from "../shared/dto/externalDataRetrievedFromServer";
 import {Resume} from "../new-cv/new-cv.component";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -26,7 +24,6 @@ export class AllCustomStepperComponent implements OnInit {
 
   templateSec1 : TemplateSec1[] = []
 
-  externalDataRetrievedFromServerTest : ExternalDataRetrievedFromServer[] = []
 
   arrayOfOptional1 : Optional1[] = []
 
@@ -75,9 +72,9 @@ export class AllCustomStepperComponent implements OnInit {
         id : 1,
         optionals : []
       }
-
+      if(i == 0)
       this.optionals1.push(this.optional1)
-      this.templateSec1[i].optionals1 = this.optionals1
+      this.templateSec1[i].optionals1 = this.optionals1 //ovde je greska //ubaci jedan element Optionals1 u niz optionals1 vise //jedino za nulti ok
 
         this.templateSec1[i].optionals1[0].optionals = []
         this.templateSec1[i].optionals1[0].optionals = this.templateSec[i].optionals
@@ -112,7 +109,7 @@ export class AllCustomStepperComponent implements OnInit {
   }
 
   onClickingSave() {
-    this.showPdf1()
+    this.savePdf()
   }
 
   onClickingPreview() {
@@ -137,13 +134,35 @@ export class AllCustomStepperComponent implements OnInit {
     pdfMake.createPdf(docDefinition).open();
   }
 
+  async savePdf() {
+
+    let docDefinition = {
+
+      content: [
+        {
+          columns: [[
+            this.getProfilePicObject(),
+            this.getAllCustomObjectsAndHeaders()
+          ]]
+        }
+
+      ]
+
+    };
+    pdfMake.createPdf(docDefinition).download();
+  }
 
   getAllCustomObjectsAndHeaders(){
     let array = []
-    let brojacEl = 0
+    let count = 0
     for(let i = 0; i < this.templateSec1.length; i++){
-      array[brojacEl++] = this.getCustomObjectHeader(this.templateSec1[i].name)
-      array[brojacEl++] = this.getCustomObjectBody(this.templateSec1[i])
+      array[count++] = this.getCustomObjectHeader(this.templateSec1[i].name)
+      if(this.templateSec1[i].optionals1.length > 1){
+        array[count++] = this.getCustomObjectOptionalInfoTable(this.templateSec1[i])
+      }
+      else {
+        array[count++] = this.getCustomObjectBody(this.templateSec1[i])
+      }
     }
     return array
   }
@@ -171,6 +190,10 @@ export class AllCustomStepperComponent implements OnInit {
       fontSize: 12,
       bold: true
     }
+  }
+
+  getCustomObjectOptionalInfoTable(templateSec1: TemplateSec1){
+    return this.table(this.rowsForCreatingTable(templateSec1), this.columnsForCreatingTable(templateSec1.optionals1[0]))
   }
 
   getCustomObjectHeader(name: string) {
@@ -211,22 +234,10 @@ export class AllCustomStepperComponent implements OnInit {
     return null;
   }
 
-  async showPdf1() {
 
-    let docDefinition = {
 
-      content: [
-        {
-          columns: [[
-            this.table(this.rowsForCreatingTable(), this.columnsForCreatingTable())
-          ]]
-        }
 
-      ]
 
-    };
-    pdfMake.createPdf(docDefinition).open();
-  }
 
   table(data, columns) {
     return {
@@ -256,26 +267,27 @@ export class AllCustomStepperComponent implements OnInit {
     return body;
   }
 
-  rowsForCreatingTable(){
-    let ext = []
-
-      for (let i = 0; i < this.templateSec1[0].optionals1.length; i++) {
-        let object = {}
-        for(let j = 0; j < this.templateSec1[0].optionals1[i].optionals.length; j++) {
-          object[this.templateSec1[0].optionals1[i].optionals[j].optionalColumn] = this.templateSec1[0].optionals1[i].optionals[j].value;
-        }
-        ext.push(object)
-    }
-    return ext
+  columnsForCreatingTable(optional1 : Optional1){
+    let array = []
+    for(let i = 0; i < optional1.optionals.length; i++)
+      array.push(optional1.optionals[i].optionalColumn)
+    return array
   }
 
-  columnsForCreatingTable(){
-    let helpArray = []
-    for(let i = 0; i < this.templateSec1[0].optionals1[0].optionals.length; i++){
-      helpArray.push(this.templateSec1[0].optionals1[0].optionals[i].optionalColumn)
+  rowsForCreatingTable(templateSec1: TemplateSec1){
+    let array = []
+
+    for (let i = 0; i < templateSec1.optionals1.length; i++) {
+      let object = {}
+      for(let j = 0; j < templateSec1.optionals1[i].optionals.length; j++) {
+        object[templateSec1.optionals1[i].optionals[j].optionalColumn] = templateSec1.optionals1[i].optionals[j].value;
+      }
+      array.push(object)
     }
-    return helpArray
+    return array
   }
+
+
 
 
 }

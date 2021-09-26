@@ -57,3 +57,7 @@ body{
 .make-distance{
   margin-left: 100px;;
 }
+
+input.ng-dirty.ng-invalid {
+  color: red
+}
