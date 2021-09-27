@@ -13,15 +13,17 @@
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Email:" [formControlName]="'email'">
+        <span class = "span-lower"*ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">Email should have '@' inside.</span>
       </mat-form-field>
       <mat-form-field>
         <input matInput type = 'password' placeholder="Password:" [formControlName]="'password'">
+        <span class = "span-lower"*ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">You need to have at least 8 characters in length, 1 lowercase letter, 1 uppercase letter 1 number and 1 special character</span>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Address:" [formControlName]="'address'">
       </mat-form-field>
       <div>
-        <button type="button" class="btn btn-link" (click) = "onClickingRegister()">Register</button>
+        <button class="btn btn-link" type = "submit" (click) = "onClickingRegister()">Register</button>
       </div>
     </form>
   </mat-card>

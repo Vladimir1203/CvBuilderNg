@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import {TemplateSec} from "../shared/dto/template-sec";
+import {OptionalSection} from "../shared/dto/optional-section";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SendCustomConfigService {
-  templateSec : TemplateSec[] = []
+  templateSec : OptionalSection[] = []
   profilePicture : boolean
   constructor() { }
 
-  sendCustomConfiguration(templateSec: TemplateSec[], profilePicture : boolean) {
+  sendCustomConfiguration(templateSec: OptionalSection[], profilePicture : boolean) {
     this.templateSec = templateSec
     this.profilePicture = profilePicture
   }

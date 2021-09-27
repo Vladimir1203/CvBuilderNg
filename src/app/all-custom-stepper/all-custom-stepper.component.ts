@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SendCustomConfigService} from "../service/send-custom-config.service";
-import {TemplateSec} from "../shared/dto/template-sec";
+import {OptionalSection} from "../shared/dto/optional-section";
 import {Observable} from "rxjs";
 import {StepperOrientation} from "@angular/material/stepper";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -8,7 +8,7 @@ import {map} from "rxjs/operators";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {TemplateSec1} from "../shared/dto/template-sec1";
 import {Optional1} from "../shared/dto/optional1";
-import {Optional} from "../shared/dto/optional";
+import {OptionalEntity} from "../shared/dto/optional-entity";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import {Resume} from "../new-cv/new-cv.component";
@@ -27,7 +27,7 @@ export class AllCustomStepperComponent implements OnInit {
 
   arrayOfOptional1 : Optional1[] = []
 
-  templateSec : TemplateSec[] = []
+  templateSec : OptionalSection[] = []
 
   idOption : number = 0
   idOption1 : number = 0
@@ -36,7 +36,7 @@ export class AllCustomStepperComponent implements OnInit {
   resume = new Resume();
 
   optionals1 : Optional1[] = []
-  optionals : Optional[] = []
+  optionals : OptionalEntity[] = []
   optional1 : Optional1
 
 
@@ -50,8 +50,8 @@ export class AllCustomStepperComponent implements OnInit {
   });
 
   addingOptional1 = new Optional1
-  optionsInit : Optional[] = []
-  optionalInit : Optional
+  optionsInit : OptionalEntity[] = []
+  optionalInit : OptionalEntity
   profilePicture = false
 
   constructor(private customConfigService : SendCustomConfigService,private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
@@ -183,7 +183,7 @@ export class AllCustomStepperComponent implements OnInit {
     return array
   }
 
-  getCustomObjectOptionalInfo(optional: Optional) {
+  getCustomObjectOptionalInfo(optional: OptionalEntity) {
     return {
       text : optional.optionalColumn + " :" + optional.value,
       alignment: 'left',

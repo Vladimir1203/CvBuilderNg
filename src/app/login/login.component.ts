@@ -31,19 +31,30 @@ export class LoginComponent implements OnInit {
   }
 
   onClickingLogin() {
+    if(!this.allFieldsValid()) {
+      alert("You need to fill your username and password!")
+      return;
+    }
+
     this.loginRequestPayload.username = this.loginForm.get('username').value;
     this.loginRequestPayload.password = this.loginForm.get('password').value;
 
     this.authService.login(this.loginRequestPayload).subscribe(data => {
       this.isError = false;
       this.loggedUsername = this.loginRequestPayload.username;
+      this.authService.premiumUser(this.loginRequestPayload)
       this.router.navigateByUrl('home');
     }, error => {
       this.isError = true;
+      alert("Invalid credentials!")
       throwError(error);
     });
 
-    this.authService.premiumUser(this.loginRequestPayload)
+
+  }
+
+  allFieldsValid() {
+    return this.loginForm.get('username').valid && this.loginForm.get('password').valid;
   }
 
   onClickingRegister() {

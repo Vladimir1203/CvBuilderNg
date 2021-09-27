@@ -21,6 +21,11 @@
   background: 	#404040;
 }
 
+.span-lower{
+  font-size: 12px;
+  color : #e31d1d;
+}
+
 .btn-link{
   color: #404040;
 }

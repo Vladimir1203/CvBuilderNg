@@ -33,11 +33,23 @@ export class RegistrationComponent implements OnInit {
       username: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormControl('', [Validators.required]),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
     })
   }
 
+  allFieldsValid() {
+    return this.registerForm.get('name').valid && this.registerForm.get('surname').valid && this.registerForm.get('username').valid
+      && this.registerForm.get('email').valid && this.registerForm.get('address').valid && this.registerForm.get('password').valid;
+  }
+
   onClickingRegister() {
+
+    if(!this.allFieldsValid()) {
+      alert("Wrong input of your data!")
+      return;
+    }
+
+
     this.registerRequestPayload.name = this.registerForm.get('name').value;
     this.registerRequestPayload.surname = this.registerForm.get('surname').value;
     this.registerRequestPayload.username = this.registerForm.get('username').value;
@@ -45,13 +57,14 @@ export class RegistrationComponent implements OnInit {
     this.registerRequestPayload.address = this.registerForm.get('address').value;
     this.registerRequestPayload.password = this.registerForm.get('password').value;
 
-
     this.authService.register(this.registerRequestPayload)
       .subscribe(data => {
         this.router.navigate(['/login'], {
           queryParams: {registered: 'true'}
         });
         console.log(data);
-      }, error => console.log('Registration Failed! Please try again'));
+      }, error => {console.log('Registration Failed! Please try again')
+        alert("Registration Failed! Please try again!")}
+      );
   }
 }

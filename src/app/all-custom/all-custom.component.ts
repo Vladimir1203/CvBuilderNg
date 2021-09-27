@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Optional} from "../shared/dto/optional";
-import {TemplateSec} from "../shared/dto/template-sec";
+import {OptionalEntity} from "../shared/dto/optional-entity";
+import {OptionalSection} from "../shared/dto/optional-section";
 import {Router} from "@angular/router";
 import {SendCustomConfigService} from "../service/send-custom-config.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomTemplateService} from "../service/custom/custom-template.service";
-import {TemplateAllSections} from "../shared/dto/template-all-sections";
+import {OptionalTemplate} from "../shared/dto/optional-template";
 
 
 @Component({
@@ -16,27 +16,27 @@ import {TemplateAllSections} from "../shared/dto/template-all-sections";
 export class AllCustomComponent implements OnInit {
 
   //u templateSec se nalaze svi podaci sa forme (konfiguracija citava za custom kreiranje CV-a)
-  templateSec : TemplateSec[] = []
+  templateSec : OptionalSection[] = []
 
 
-
+  nameOfTheTemplate : string = ''
 
   dataTypes : string[] = []
 
   sections: string[] = []
   o : number
   //ovo je test
-  templateSection : TemplateSec
-  optionalSection : Optional
+  templateSection : OptionalSection
+  optionalSection : OptionalEntity
   profilePicture: false;
 
   //form validator
   submitted = false;
   exampleForm: FormGroup;
 
-  firstFormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-  });
+  firstFormGroup : FormGroup
+
+  brojac : number = 0
 
   constructor(private customTemplateService : CustomTemplateService, private router : Router, private customService : SendCustomConfigService, private formBuilder: FormBuilder) {
     this.dataTypes.push("String")
@@ -46,8 +46,8 @@ export class AllCustomComponent implements OnInit {
     this.dataTypes.push("Date")
 
     //ovo je test
-    this.templateSection = new TemplateSec()
-    this.optionalSection = new Optional()
+    this.templateSection = new OptionalSection()
+    this.optionalSection = new OptionalEntity()
     this.templateSection.optionals = []
     this.optionalSection.optionalColumn = ''
     this.optionalSection.optionalType = ''
@@ -56,9 +56,9 @@ export class AllCustomComponent implements OnInit {
     this.templateSection.optionals.push(this.optionalSection)
 
 
-    this.templateSec[0] = new TemplateSec()
+    this.templateSec[0] = new OptionalSection()
     this.templateSec[0].optionals = []
-    this.templateSec[0].optionals[0] = new Optional()
+    this.templateSec[0].optionals[0] = new OptionalEntity()
     this.templateSec[0].optionals[0].optionalColumn = ''
     this.templateSec[0].optionals[0].optionalType = 'String'
     this.templateSec[0].name = ''
@@ -69,20 +69,25 @@ export class AllCustomComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.firstFormGroup = new FormGroup({
+    //   name0 : new FormControl('', Validators.required),
+    // })
     this.exampleForm = this.formBuilder.group({
       fieldName: [this, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]]
     });
   }
 
   addField(index : number) {
-    this.templateSec[index].optionals.push(new Optional())
+    this.templateSec[index].optionals.push(new OptionalEntity("String"))
+    //this.brojac++
+    //this.firstFormGroup.addControl('name'+this.brojac, new FormControl('', Validators.required))
   }
 
   addNewSection(index : number) {
     index++
-    this.templateSec.push(new TemplateSec())
+    this.templateSec.push(new OptionalSection())
     this.templateSec[index].optionals = []
-    this.templateSec[index].optionals[0] = new Optional()
+    this.templateSec[index].optionals[0] = new OptionalEntity()
     this.templateSec[index].optionals[0].optionalColumn = ''
     this.templateSec[index].optionals[0].optionalType = ''
     this.templateSec[index].optionals[0].value = ''
@@ -90,15 +95,34 @@ export class AllCustomComponent implements OnInit {
     this.templateSec[index].repeatable = false
   }
 
-
+  isEverythingValid() {
+    if( this.nameOfTheTemplate === '')
+      return false;
+    for(let i = 0; i < this.templateSec.length; i++){
+      if(this.templateSec[i].name === '')
+        return false;
+      for(let j = 0; j < this.templateSec[i].optionals.length; j++){
+        if(this.templateSec[i].optionals[j].optionalColumn === '')
+          return false;
+      }
+    }
+    return true;
+  }
 
   saveConfiguration() {
-    let  template : TemplateAllSections
-    template = {
-      name : "testTemplate",
-      allSections : this.templateSec
+    if(!this.isEverythingValid()){
+      alert("Please fill all fields. (Name of template, name of all sections and all the fields)")
+      return;
     }
-    this.customTemplateService.saveCustomTemplate(template)
+
+    let  optionalTemplate : OptionalTemplate
+    optionalTemplate = {
+      templateAllSectionsId : 0,
+      hasPicture : this.profilePicture,
+      name : this.nameOfTheTemplate,
+      optionalSections : this.templateSec
+    }
+    this.customTemplateService.saveCustomTemplate(optionalTemplate)
     //this.customTemplateService.saveCustomTemplateList(this.templateSec)
     this.customService.sendCustomConfiguration(this.templateSec, this.profilePicture)
     this.router.navigate(['/allCustomStepper'])

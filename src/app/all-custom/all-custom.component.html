@@ -13,10 +13,10 @@
   <div class="form-group app-label">
     <br><br>
     <label class="text-muted">Create a CV with the profile picture</label>
-    <br>
+    <mat-checkbox color="primary" [(ngModel)]="profilePicture" [ngModelOptions]="{standalone: true}" class = "check_custom"></mat-checkbox>
   </div>
 
-  <mat-checkbox color="primary" [(ngModel)]="profilePicture" [ngModelOptions]="{standalone: true}" class = "check_custom"></mat-checkbox>
+
 </div>
   <div class="form-group app-label make-distance" >
     <br><br>
@@ -25,14 +25,24 @@
   </div>
 </div>
 
+
+<div class="col-md-4">
+  <div class="form-group app-label">
+    <br>
+    <label class="text-muted">Name of the template</label>
+    <input [(ngModel)]="nameOfTheTemplate" [ngModelOptions]="{standalone: true}" type="text" class="form-control resume" placeholder="">
+  </div>
+</div>
+
 <!--sections-->
+<form>
 <div *ngFor="let section of templateSec">
   <br><br><br>
 <div class="row">
   <div class="col-md-4">
     <div class="form-group app-label">
       <label class="text-muted">Name of the section</label>
-      <input [(ngModel)]="section.name" [ngModelOptions]="{standalone: true}" type="text" class="form-control resume" placeholder="">
+      <input [(ngModel)]="section.name" [ngModelOptions]="{standalone: true}"  type="text" class="form-control resume" placeholder="" required>
     </div>
   </div>
   <div class="spacing"></div>
@@ -47,7 +57,7 @@
     <div class="job-detail mt-2 p-4">
       <div class="custom-form">
 
-        <form [formGroup]="firstFormGroup">
+
               <div class = "row" *ngFor="let o of section.optionals ">
                 <div class="col-md-4">
                   <div class="form-group app-label">
@@ -64,7 +74,8 @@
                 <div class="col-md-4">
                   <div>
                     <label class="text-muted">Field name</label>
-                    <input [(ngModel)]="o.optionalColumn" [ngModelOptions]="{standalone: true}" type="text" class="form-control" required>
+                    <input [(ngModel)]="o.optionalColumn" [ngModelOptions]="{standalone: true}" class="form-control resume" type="text"  required>
+
                   </div>
                 </div>
 
@@ -84,7 +95,7 @@
                   <button *ngIf = "templateSec.length-1 === templateSec.indexOf(section)" class="btn btn_down" (click)="addNewSection(templateSec.indexOf(section))">Add new section</button>
                 </div>
 
-        </form>
+
       </div>
     </div>
   </div>
@@ -92,6 +103,7 @@
 
 
 </div>
+</form>
 
 <br><br><br><br>
 

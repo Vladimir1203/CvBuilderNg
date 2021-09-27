@@ -1,6 +1,7 @@
 import {OptionalEntity} from "./optional-entity";
 
-export class Optional1{
-  id : number
+export class OptionalSection {
+  name : string;
+  repeatable : boolean
   optionals : OptionalEntity[]
 }
